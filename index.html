@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sorry ❤️</title>
+<title>I'm Sorry ❤️</title>
 
 <style>
 
@@ -15,8 +15,8 @@
 }
 
 body{
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
     min-height:100vh;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -25,7 +25,8 @@ body{
 }
 
 .container{
-    max-width:700px;
+    max-width:750px;
+    width:100%;
     background:white;
     padding:30px;
     border-radius:25px;
@@ -38,19 +39,19 @@ body{
     height:250px;
     object-fit:cover;
     border-radius:20px;
-    margin-bottom:15px;
     box-shadow:0 5px 15px rgba(0,0,0,.2);
+    margin-bottom:20px;
 }
 
 h1{
     color:#ff4d6d;
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 
 .message{
-    margin:15px 0;
-    line-height:1.8;
     color:#444;
+    line-height:1.8;
+    margin-bottom:25px;
 }
 
 .message p{
@@ -58,14 +59,14 @@ h1{
 }
 
 .special{
-    margin-top:20px;
     text-align:left;
+    margin-top:20px;
 }
 
 .special h2{
     text-align:center;
     color:#ff4d6d;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
 .special li{
@@ -74,10 +75,10 @@ h1{
 
 .gallery{
     display:flex;
-    flex-wrap:wrap;
     justify-content:center;
+    flex-wrap:wrap;
     gap:10px;
-    margin-top:20px;
+    margin-top:25px;
 }
 
 .gallery img{
@@ -85,6 +86,7 @@ h1{
     height:150px;
     object-fit:cover;
     border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 button{
@@ -93,10 +95,10 @@ button{
     border:none;
     padding:12px 25px;
     border-radius:30px;
-    font-size:16px;
     cursor:pointer;
-    margin-top:20px;
-    transition:0.3s;
+    font-size:16px;
+    margin-top:25px;
+    transition:.3s;
 }
 
 button:hover{
@@ -105,9 +107,9 @@ button:hover{
 
 #reply{
     margin-top:15px;
-    font-weight:bold;
     color:#ff4d6d;
     font-size:20px;
+    font-weight:bold;
 }
 
 .floating-heart{
@@ -115,6 +117,7 @@ button:hover{
     bottom:-50px;
     font-size:25px;
     animation:float 8s linear infinite;
+    pointer-events:none;
 }
 
 @keyframes float{
@@ -128,31 +131,39 @@ button:hover{
     }
 }
 
+.footer{
+    margin-top:25px;
+    color:#888;
+    font-size:14px;
+}
+
 </style>
 </head>
 <body>
 
 <div class="container">
 
-    <img src="photo.jpg.jpeg" class="main-photo" alt="Main Photo">
+    <img src="photo.jpg.jpeg" class="main-photo" alt="Photo">
 
     <h1>I'm Truly Sorry ❤️</h1>
 
     <div class="message">
 
-        <p>I know I made mistakes, and I sincerely regret them.</p>
+        <p>I know I made mistakes and I genuinely regret them.</p>
 
-        <p>You are someone I deeply care about, and hurting you was never my intention.</p>
+        <p>You are someone very important to me, and hurting you was never my intention.</p>
 
-        <p>Every conversation, every laugh, and every memory with you means a lot to me.</p>
+        <p>Every conversation, every laugh, and every memory we shared means a lot to me.</p>
 
-        <p>I wish I could undo the moments that caused pain.</p>
+        <p>I wish I could take away any sadness or disappointment I caused.</p>
 
-        <p>Thank you for the kindness, support, and happiness you've brought into my life.</p>
+        <p>Thank you for all the kindness, patience and happiness you've brought into my life.</p>
 
-        <p>No matter what happens, I will always cherish the memories we created together.</p>
+        <p>I truly appreciate you more than words can express.</p>
 
-        <p>If there is a chance to make things right, I would gladly take it.</p>
+        <p>If there's a chance to make things right, I'd love that opportunity.</p>
+
+        <p>No matter what happens, I'll always cherish our memories.</p>
 
     </div>
 
@@ -161,38 +172,59 @@ button:hover{
         <h2>Why You're Special ❤️</h2>
 
         <ul>
-            <li>Your smile can brighten any day.</li>
+            <li>Your smile brightens every room.</li>
             <li>You make ordinary moments unforgettable.</li>
-            <li>Your kindness inspires people around you.</li>
-            <li>You always leave a positive impact.</li>
+            <li>Your kindness inspires everyone around you.</li>
+            <li>You bring happiness wherever you go.</li>
             <li>You are genuinely one of a kind.</li>
         </ul>
 
     </div>
 
     <div class="gallery">
-
         <img src="pic1.jpg.jpeg" alt="">
         <img src="pic2.jpg.jpeg" alt="">
         <img src="pic3.jpg.jpeg" alt="">
-
     </div>
 
     <button onclick="forgive()">Forgive Me 🥺</button>
 
     <div id="reply"></div>
 
-    <audio autoplay loop controls>
-        <source src="song.mpeg" type="audio/mpeg">
-    </audio>
+    <div class="footer">
+        Made with ❤️
+    </div>
 
 </div>
 
+<audio id="bgMusic" loop>
+    <source src="song.mpeg" type="audio/mpeg">
+</audio>
+
 <script>
+
+const music = document.getElementById("bgMusic");
+
+// Try autoplay
+window.addEventListener("load", () => {
+    music.play().catch(() => {
+        console.log("Autoplay blocked");
+    });
+});
+
+// Play on first click
+document.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+
+// Play on first touch (mobile)
+document.addEventListener("touchstart", () => {
+    music.play();
+}, { once: true });
 
 function forgive(){
     document.getElementById("reply").innerHTML =
-    "Thank you ❤️ It means a lot.";
+    "Thank you ❤️ It means a lot to me.";
 }
 
 function createHeart(){
@@ -202,16 +234,16 @@ function createHeart(){
     heart.className = "floating-heart";
     heart.innerHTML = "❤️";
 
-    heart.style.left = Math.random()*100 + "vw";
+    heart.style.left = Math.random() * 100 + "vw";
 
     document.body.appendChild(heart);
 
-    setTimeout(()=>{
+    setTimeout(() => {
         heart.remove();
-    },8000);
+    }, 8000);
 }
 
-setInterval(createHeart,500);
+setInterval(createHeart, 500);
 
 </script>
 
