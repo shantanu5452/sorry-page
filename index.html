@@ -17,10 +17,32 @@ body{
     min-height:100vh;
     background:linear-gradient(135deg,#ff9a9e,#fad0c4);
     display:flex;
+    flex-direction: column;
     justify-content:center;
     align-items:center;
     padding:20px;
     overflow-x:hidden; 
+}
+
+/* Music Hint for modern browser autoplay restrictions */
+.music-hint {
+    background: rgba(255, 255, 255, 0.8);
+    color: #ff4d6d;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    animation: pulse 1.5s infinite;
+    z-index: 100;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
 }
 
 .container{
@@ -76,6 +98,17 @@ h1{
     list-style-position: inside;
 }
 
+/* Centering the specific forever and ever text */
+.special li.centered-highlight {
+    list-style-type: none;
+    text-align: center;
+    font-weight: bold;
+    color: #ff4d6d;
+    margin-top: 15px;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
 .gallery{
     display:flex;
     justify-content:center;
@@ -122,18 +155,18 @@ h1{
     cursor:pointer;
     font-size:16px;
     margin:10px;
-    transition: .2s ease, opacity 0.5s ease; /* Added opacity fade transition */
+    transition: .2s ease, opacity 0.5s ease;
     position: relative;
 }
 
 #reply{
     margin-top:20px;
-    font-size:22px;
+    font-size:20px;
     font-weight:bold;
     color:#ff4d6d;
     min-height: 30px;
-    line-height: 1.5;
-    padding: 0 10px;
+    line-height: 1.6;
+    padding: 0 15px;
 }
 
 .floating-heart{
@@ -164,6 +197,8 @@ h1{
 </head>
 <body>
 
+<div id="musicHint" class="music-hint">Tap anywhere to play music 🎵</div>
+
 <div class="container">
 
     <img src="photo.jpg.jpeg" class="main-photo">
@@ -186,7 +221,7 @@ h1{
             <li>You were mineeeee.</li>
             <li>You are mineeeeeeee .</li>
             <li>You will alwaysss be mineeeeee</li>
-            <li>FOREVER AND EVER</li>
+            <li class="centered-highlight">FOREVER AND EVER</li>
         </ul>
     </div>
 
@@ -234,8 +269,8 @@ h1{
 const bgMusic = document.getElementById("bgMusic");
 const yesMusic = document.getElementById("yesMusic");
 const noMusic = document.getElementById("noMusic");
+const musicHint = document.getElementById("musicHint");
 
-// Track how many times they click/hover No
 let noClickCount = 0;
 
 function stopAudio(audioTrack) {
@@ -243,26 +278,25 @@ function stopAudio(audioTrack) {
     audioTrack.currentTime = 0;
 }
 
-window.addEventListener("load", () => {
-    bgMusic.play().catch(() => {
-        console.log("Autoplay caught by browser restrictions. Awaiting user click.");
+// Function to handle absolute starting background music safely
+function startBackgroundMusic() {
+    bgMusic.play().then(() => {
+        // If it plays successfully, hide the visual music reminder tip
+        musicHint.style.display = "none";
+    }).catch((error) => {
+        console.log("Waiting for formal gesture to enable audio streams:", error);
     });
-});
+}
 
-document.addEventListener("click", () => {
-    if (bgMusic.paused && yesMusic.paused && noMusic.paused) {
-        bgMusic.play().catch(() => {});
-    }
-}, { once:true });
+// Try on load
+window.addEventListener("load", startBackgroundMusic);
 
-document.addEventListener("touchstart", () => {
-    if (bgMusic.paused && yesMusic.paused && noMusic.paused) {
-        bgMusic.play().catch(() => {});
-    }
-}, { once:true });
+// Listeners to force play instantly on any surface action
+document.addEventListener("click", startBackgroundMusic, { once: true });
+document.addEventListener("touchstart", startBackgroundMusic, { once: true });
 
 
-function yesClicked(){
+function yesClicked() {
     stopAudio(bgMusic);
     stopAudio(noMusic);
 
@@ -276,18 +310,16 @@ function yesClicked(){
     btn.style.pointerEvents = "auto";
 }
 
-function noClicked(){
+function noClicked() {
     noClickCount++;
     const btn = document.getElementById("noBtn");
 
-    // Check if they've attempted 5 times
     if (noClickCount >= 5) {
-        // Completely vanish the button
         btn.style.opacity = "0";
         btn.style.pointerEvents = "none";
         
-        // Show your special message
-        document.getElementById("reply").innerHTML = "You have to be mine, doesn't matter for how much time you don't talk i will be there always. 🥺❤️";
+        // Updated your customized final configuration message text perfectly here
+        document.getElementById("reply").innerHTML = "You have to be mine, doesn't matter for how many days you don't talk. 🥺❤️ Getting back is never an option , I will alwayss be there for you waiting . It will never be over for me and thats clear";
         return;
     }
 
@@ -305,7 +337,7 @@ function noClicked(){
     btn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
-function createHeart(){
+function createHeart() {
     const heart = document.createElement("div");
     heart.className = "floating-heart";
     
