@@ -1,259 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I'm Sorry ❤️</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    min-height:100vh;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    overflow-x:hidden;
-}
-
-.container{
-    max-width:750px;
-    width:100%;
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-}
-
-.main-photo{
-    width:250px;
-    height:250px;
-    object-fit:cover;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-    margin-bottom:20px;
-}
-
-h1{
-    color:#ff4d6d;
-    margin-bottom:20px;
-}
-
-.message{
-    color:#444;
-    line-height:1.8;
-    margin-bottom:25px;
-}
-
-.message p{
-    margin-bottom:12px;
-}
-
-.special{
-    text-align:left;
-    margin-top:20px;
-}
-
-.special h2{
-    text-align:center;
-    color:#ff4d6d;
-    margin-bottom:15px;
-}
-
-.special li{
-    margin:10px 0;
-}
-
-.gallery{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:25px;
-}
-
-.gallery img{
-    width:150px;
-    height:150px;
-    object-fit:cover;
-    border-radius:15px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-}
-
-.button-area{
-    margin-top:30px;
-}
-
-.yesBtn{
-    background:#ff4d6d;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    border-radius:30px;
-    cursor:pointer;
-    font-size:16px;
-    margin:10px;
-}
-
-.noBtn{
-    background:#888;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    border-radius:30px;
-    cursor:pointer;
-    font-size:16px;
-    margin:10px;
-    transition:.3s;
-}
-
-#reply{
-    margin-top:20px;
-    font-size:22px;
-    font-weight:bold;
-    color:#ff4d6d;
-}
-
-.floating-heart{
-    position:fixed;
-    bottom:-50px;
-    font-size:25px;
-    animation:float 8s linear infinite;
-    pointer-events:none;
-}
-
-@keyframes float{
-    from{
-        transform:translateY(0);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-110vh);
-        opacity:0;
-    }
-}
-
-.footer{
-    margin-top:30px;
-    color:#888;
-}
-
-</style>
-</head>
-<body>
-
-<div class="container">
-
-    <img src="photo.jpg.jpeg" class="main-photo">
-
-    <h1>I'm Truly Sorry ❤️</h1>
-
-    <div class="message">
-
-        <p>I know I made mistakes and I genuinely regret them.</p>
-
-        <p>You mean a lot to me and hurting you was never my intention.</p>
-
-        <p>Every memory we shared is precious to me.</p>
-
-        <p>I wish I could undo the moments that caused pain.</p>
-
-        <p>Thank you for all the happiness and kindness you've brought into my life.</p>
-
-        <p>If there is a chance to make things right, I would gladly take it.</p>
-
-        <p>No matter what happens, I will always cherish our memories.</p>
-
-    </div>
-
-    <div class="special">
-
-        <h2>Why You're Special ❤️</h2>
-
-        <ul>
-            <li>Your smile brightens every room.</li>
-            <li>You make ordinary moments unforgettable.</li>
-            <li>Your kindness inspires people around you.</li>
-            <li>You always bring positivity.</li>
-            <li>You are truly one of a kind.</li>
-        </ul>
-
-    </div>
-
-    <div class="gallery">
-        <img src="pic1.jpg">
-        <img src="pic2.jpg">
-        <img src="pic3.jpg">
-    </div>
-
-    <div class="button-area">
-
-        <h2 style="margin-bottom:15px;color:#ff4d6d;">
-            Will You Forgive Me? 🥺
-        </h2>
-
-        <button onclick="yesClicked()" class="yesBtn">
-            Yes ❤️
-        </button>
-
-        <button id="noBtn" onclick="noClicked()" class="noBtn">
-            No 😔
-        </button>
-
-    </div>
-
-    <div id="reply"></div>
-
-    <div class="footer">
-        Made with ❤️
-    </div>
-
-</div>
-
-<audio id="bgMusic" loop>
-    <source src="song.mpeg" type="audio/mpeg">
-</audio>
-
-<audio id="yesMusic">
-    <source src="yessong.mpeg" type="audio/mpeg">
-</audio>
-
-<audio id="noMusic">
-    <source src="nosong.mpeg" type="audio/mpeg">
-</audio>
-
 <script>
 
 const bgMusic = document.getElementById("bgMusic");
 const yesMusic = document.getElementById("yesMusic");
 const noMusic = document.getElementById("noMusic");
 
+function stopAllMusic() {
+
+    bgMusic.pause();
+    yesMusic.pause();
+    noMusic.pause();
+
+    bgMusic.currentTime = 0;
+    yesMusic.currentTime = 0;
+    noMusic.currentTime = 0;
+}
+
+// Main song when site opens
 window.addEventListener("load", () => {
-    bgMusic.play().catch(() => {});
+
+    bgMusic.volume = 0.7;
+
+    bgMusic.play().catch(() => {
+        console.log("Autoplay blocked");
+    });
+
 });
 
+// If browser blocks autoplay
 document.addEventListener("click", () => {
-    bgMusic.play();
+
+    if(bgMusic.paused){
+        bgMusic.play();
+    }
+
 }, { once:true });
 
 document.addEventListener("touchstart", () => {
-    bgMusic.play();
+
+    if(bgMusic.paused){
+        bgMusic.play();
+    }
+
 }, { once:true });
 
 function yesClicked(){
 
-    bgMusic.pause();
+    stopAllMusic();
 
-    yesMusic.currentTime = 0;
     yesMusic.play();
 
     document.getElementById("reply").innerHTML =
@@ -263,9 +56,8 @@ function yesClicked(){
 
 function noClicked(){
 
-    bgMusic.pause();
+    stopAllMusic();
 
-    noMusic.currentTime = 0;
     noMusic.play();
 
     document.getElementById("reply").innerHTML =
@@ -300,6 +92,3 @@ function createHeart(){
 setInterval(createHeart, 500);
 
 </script>
-
-</body>
-</html>
