@@ -20,7 +20,6 @@ body{
     justify-content:center;
     align-items:center;
     padding:20px;
-    /* FIX: Changed from 'hidden' to 'overflow-x: hidden' to allow vertical scrolling */
     overflow-x:hidden; 
 }
 
@@ -34,7 +33,7 @@ body{
     box-shadow:0 10px 30px rgba(0,0,0,.2);
     position: relative;
     z-index: 10;
-    margin: 20px 0; /* Adds space at top/bottom when scrolling */
+    margin: 20px 0;
 }
 
 .main-photo{
@@ -123,7 +122,7 @@ h1{
     cursor:pointer;
     font-size:16px;
     margin:10px;
-    transition: .2s ease;
+    transition: .2s ease, opacity 0.5s ease; /* Added opacity fade transition */
     position: relative;
 }
 
@@ -133,6 +132,8 @@ h1{
     font-weight:bold;
     color:#ff4d6d;
     min-height: 30px;
+    line-height: 1.5;
+    padding: 0 10px;
 }
 
 .floating-heart{
@@ -186,7 +187,6 @@ h1{
             <li>You are mineeeeeeee .</li>
             <li>You will alwaysss be mineeeeee</li>
             <li>FOREVER AND EVER</li>
-            
         </ul>
     </div>
 
@@ -235,6 +235,9 @@ const bgMusic = document.getElementById("bgMusic");
 const yesMusic = document.getElementById("yesMusic");
 const noMusic = document.getElementById("noMusic");
 
+// Track how many times they click/hover No
+let noClickCount = 0;
+
 function stopAudio(audioTrack) {
     audioTrack.pause();
     audioTrack.currentTime = 0;
@@ -269,9 +272,25 @@ function yesClicked(){
     
     const btn = document.getElementById("noBtn");
     btn.style.transform = "translate(0px, 0px)";
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
 }
 
 function noClicked(){
+    noClickCount++;
+    const btn = document.getElementById("noBtn");
+
+    // Check if they've attempted 5 times
+    if (noClickCount >= 5) {
+        // Completely vanish the button
+        btn.style.opacity = "0";
+        btn.style.pointerEvents = "none";
+        
+        // Show your special message
+        document.getElementById("reply").innerHTML = "You have to be mine, doesn't matter for how much time you don't talk i will be there always. 🥺❤️";
+        return;
+    }
+
     stopAudio(bgMusic);
     stopAudio(yesMusic);
 
@@ -281,7 +300,6 @@ function noClicked(){
 
     document.getElementById("reply").innerHTML = "Please think once more 🥺❤️";
 
-    const btn = document.getElementById("noBtn");
     const x = Math.random() * 240 - 120;
     const y = Math.random() * 140 - 70;
     btn.style.transform = `translate(${x}px, ${y}px)`;
