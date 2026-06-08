@@ -20,7 +20,8 @@ body{
     justify-content:center;
     align-items:center;
     padding:20px;
-    overflow:hidden;
+    /* FIX: Changed from 'hidden' to 'overflow-x: hidden' to allow vertical scrolling */
+    overflow-x:hidden; 
 }
 
 .container{
@@ -33,6 +34,7 @@ body{
     box-shadow:0 10px 30px rgba(0,0,0,.2);
     position: relative;
     z-index: 10;
+    margin: 20px 0; /* Adds space at top/bottom when scrolling */
 }
 
 .main-photo{
@@ -238,14 +240,12 @@ function stopAudio(audioTrack) {
     audioTrack.currentTime = 0;
 }
 
-// Attempts autoplay right away when page opens
 window.addEventListener("load", () => {
     bgMusic.play().catch(() => {
         console.log("Autoplay caught by browser restrictions. Awaiting user click.");
     });
 });
 
-// Fallbacks: Main song triggers on very first click/touch if browser blocked it initially
 document.addEventListener("click", () => {
     if (bgMusic.paused && yesMusic.paused && noMusic.paused) {
         bgMusic.play().catch(() => {});
